@@ -46,7 +46,7 @@ module "google_postgres_db" {
   database_version  = var.db_version
   region            = data.google_client_config.google_client.region
   zone              = var.zone_master_instance
-  availability_type = var.highly_available ? "REGIONAL" : null
+  availability_type = var.highly_available ? "REGIONAL" : "ZONAL"
   tier              = var.instance_size_master_instance
   disk_size         = var.disk_size_gb_master_instance
   disk_autoresize   = var.disk_auto_resize_master_instance
