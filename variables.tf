@@ -59,13 +59,13 @@ variable "db_collation" {
 variable "instance_size_master_instance" {
   description = "The machine type/size of \"Master\" instance. See https://cloud.google.com/sql/docs/postgres/create-instance#machine-types for accepted Postgres instance types. Choose a corresponding value from the 'API tier string' column."
   type        = string
-  default     = "db-f1-micro"
+  default     = "db-custom-1-3840"
 }
 
 variable "instance_size_read_replica" {
   description = "The machine type/size of \"ReadReplica\" instances. See https://cloud.google.com/sql/docs/postgres/create-instance#machine-types for accepted Postgres instance types. Choose a corresponding value from the 'API tier string' column."
   type        = string
-  default     = "db-f1-micro"
+  default     = "db-custom-1-3840"
 }
 
 variable "disk_size_gb_master_instance" {
