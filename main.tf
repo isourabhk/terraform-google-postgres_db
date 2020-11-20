@@ -36,7 +36,7 @@ resource "google_project_service" "cloudsql_api" {
 
 module "google_postgres_db" {
   source            = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version           = "4.0.0"
+  version           = "4.3.0"
   depends_on        = [google_project_service.compute_api, google_project_service.cloudsql_api]
   project_id        = data.google_client_config.google_client.project
   name              = format("postgres-%s", local.master_instance_name_suffix)
@@ -45,7 +45,7 @@ module "google_postgres_db" {
   db_charset        = var.db_charset
   database_version  = var.db_version
   region            = data.google_client_config.google_client.region
-  zone              = var.zone_master_instance
+  zone              = format("%s-%s", data.google_client_config.google_client.region, var.zone_master_instance)
   availability_type = var.highly_available ? "REGIONAL" : "ZONAL"
   tier              = var.instance_size_master_instance
   disk_size         = var.disk_size_gb_master_instance
@@ -67,7 +67,7 @@ module "google_postgres_db" {
   # backup settings
   backup_configuration = {
     enabled            = var.backup_enabled
-    binary_log_enabled = var.pit_recovery_enabled
+    point_in_time_recovery_enabled = var.pit_recovery_enabled
     start_time         = "00:05"
     location           = local.backup_location
   }
