@@ -77,15 +77,20 @@ output "read_replica_instance_names" {
   description = "The instance names for the read replica instances"
 }
 
-output "user_name" {
-  description = "The name of the database user"
-  value       = var.user_name
+output "root_user_name" {
+  description = "The name of the root user"
+  value       = var.root_user_name
 }
 
-output "generated_user_password" {
-  description = "The auto generated default user password if not input password was provided"
-  value       = module.google_postgres_db.generated_user_password
+output "root_user_password" {
+  description = "The password of the root user (auto-generated if var.root_user_password was not provided)"
+  value       = var.root_user_password != "" ? var.root_user_password : module.google_postgres_db.generated_user_password
   sensitive   = true
+}
+
+output "additional_users" {
+  description = "The additional_users that were passed into this module."
+  value       = var.additional_users
 }
 
 output "public_ip_address" {
