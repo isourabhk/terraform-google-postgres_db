@@ -3,8 +3,10 @@ terraform {
 }
 
 locals {
-  master_instance_name_suffix = format("%s-%s", var.name_master_instance, var.name_suffix)
-  read_replica_name_suffix    = format("-%s-", var.name_read_replica)
+  master_instance_name = (
+    var.full_name_master_instance == "" ? format("postgres-%s-%s", var.name_master_instance, var.name_suffix) : var.full_name_master_instance
+  )
+  read_replica_name_suffix = format("-%s-", var.name_read_replica)
   master_authorized_networks = [
     for authorized_network in var.authorized_networks_master_instance : {
       name  = authorized_network.display_name
@@ -45,7 +47,7 @@ module "google_postgres_db" {
   depends_on                      = [google_project_service.compute_api, google_project_service.cloudsql_api]
   deletion_protection             = var.deletion_protection_master_instance
   project_id                      = data.google_client_config.google_client.project
-  name                            = format("postgres-%s", local.master_instance_name_suffix)
+  name                            = local.master_instance_name
   db_name                         = var.default_db_name
   db_collation                    = var.default_db_collation
   db_charset                      = var.default_db_charset
