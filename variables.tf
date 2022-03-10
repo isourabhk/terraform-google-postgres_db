@@ -262,6 +262,17 @@ variable "additional_databases" {
   default = []
 }
 
+variable "insights_config" {
+  description = "The insights_config settings for the database."
+  type = object({
+    query_insights_enabled  = bool
+    query_string_length     = number
+    record_application_tags = bool
+    record_client_address   = bool
+  })
+  default = null
+}
+
 variable "maintenance_window" {
   description = <<-EOT
   day_utc: The day of the week (1-7) in UTC timezone - starting from Monday.
