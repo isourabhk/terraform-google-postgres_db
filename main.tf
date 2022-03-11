@@ -70,7 +70,7 @@ module "google_postgres_db" {
   additional_databases            = var.additional_databases
   maintenance_window_day          = var.maintenance_window.day_utc
   maintenance_window_hour         = var.maintenance_window.hour_utc
-  insights_config                 = var.insights_config
+  insights_config                 = var.pg_insights_config
   maintenance_window_update_track = var.maintenance_window.update_track
   ip_configuration = {
     authorized_networks = local.master_authorized_networks
